@@ -5,15 +5,15 @@ input = sys.stdin.readline
 import heapq
 
 N = int(input())
-array = []
+max_heap = []
 
 for _ in range(N):
-    x = int(input())
+    X = int(input())
     
-    if x:
-        heapq.heappush(array, (-x, x))
+    if X:
+        heapq.heappush(max_heap, -X)
     else:
-        if not array:
+        if not max_heap:
             print(0)
         else:
-            print(heapq.heappop(array)[1])
+            print(-heapq.heappop(max_heap))
