@@ -1,19 +1,19 @@
-# 11279 : 최대 힙
+# 11279_02 : 최대 힙
 
 import sys
 input = sys.stdin.readline
 import heapq
 
 N = int(input())
-max_heap = []
+heap = []
 
 for _ in range(N):
-    X = int(input())
+    x = int(input())
     
-    if X:
-        heapq.heappush(max_heap, -X)
-    else:
-        if not max_heap:
+    if x == 0:
+        if not heap:
             print(0)
         else:
-            print(-heapq.heappop(max_heap))
+            print(-heapq.heappop(heap))
+    else:
+        heapq.heappush(heap, -x)
