@@ -1,4 +1,4 @@
-# 2470_02 : 두 용액
+# 2470_03 : 두 용액
 
 import sys
 input = sys.stdin.readline
@@ -6,24 +6,24 @@ input = sys.stdin.readline
 N = int(input())
 values = sorted(list(map(int, input().split())))
 
-start = 0
-end = N - 1
+# 범위를 포인터로 잡기
+start = 0   # 첫 값
+end = N - 1 # 마지막 값
 
-tmp = 2e9   # 최대는 10억, 최소는 -10억까지 가능하므로 tmp의 최대 범위인 20억으로 초기화
-rs = 0
+tmp = 2e9
 
 while start < end:
-    _sum = values[start] + values[end]
+    total = values[start] + values[end]
     
-    if abs(_sum) < tmp:
-        tmp = abs(_sum)
+    if abs(total) < tmp:
+        tmp = abs(total)
         rs = (values[start], values[end])
-        
-    if _sum == 0:
+    
+    if total == 0:
         break
-    elif _sum < 0:
-        start += 1
-    else:
+    elif total > 0:
         end -= 1
+    else:
+        start += 1
         
 print(' '.join(map(str, rs)))
