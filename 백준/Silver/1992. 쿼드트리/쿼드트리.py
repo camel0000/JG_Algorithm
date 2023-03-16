@@ -3,29 +3,27 @@
 import sys
 input = sys.stdin.readline
 
-N = int(input())
-quad = [list(map(int, input().strip())) for _ in range(N)]
-
-def div_paper(N, x, y):
-    number = quad[x][y]
+def quadTree(N, x, y):
+    check = quad[x][y]
     
     for i in range(x, x + N):
         for j in range(y, y + N):
-            if number != quad[i][j]:    # 하나라도 다르면
+            if check != quad[i][j]:
                 print('(', end='')
-                
-                div_paper(N // 2, x, y)
-                div_paper(N // 2, x, y + N // 2)
-                div_paper(N // 2, x + N // 2, y)
-                div_paper(N // 2, x + N // 2, y + N // 2)
-            
+                quadTree(N // 2, x, y)
+                quadTree(N // 2, x, y + N // 2)
+                quadTree(N // 2, x + N // 2, y)
+                quadTree(N // 2, x + N // 2, y + N // 2)
                 print(')', end='')
                 return
-    if number == 0: # 모두 0
+    
+    if check == 0:  # 모두 0인 경우
         print('0', end='')
-        return
     else:
         print('1', end='')
-        return
 
-div_paper(N, 0, 0)
+
+N = int(input())
+quad = [list(map(int, input().rstrip())) for _ in range(N)]
+
+quadTree(N, 0, 0)
