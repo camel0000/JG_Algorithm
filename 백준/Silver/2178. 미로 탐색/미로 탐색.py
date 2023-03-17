@@ -1,40 +1,34 @@
-# DFS & BFS (깊이우선탐색 & 너비우선탐색)
-# 2178번 미로탐색
+# 2178 : 미로 탐색
 
+import sys
+input = sys.stdin.readline
 from collections import deque
 
-def bfs(x, y):
-    Q = deque()
-    Q.append((x, y))
-    
-    dx = [-1, 1, 0, 0]      # 상, 하, 좌, 우
-    dy = [0, 0, -1, 1]      # 상, 하, 좌, 우
-    
-    while Q:
-        x, y = Q.popleft()
-        
-        for i in range(4):  # 상하좌우 4가지 경우
-            X = x + dx[i]   # 좌표 변경에 의한 새 X좌표
-            Y = y + dy[i]   # 좌표 변경에 의한 새 Y좌표
-            
-            if X >= N or X < 0 or Y >= M or Y < 0 or (X == 0 and Y == 0):  # 좌표가 범위를 벗어나는 경우
-                continue
-            if matrix_[X][Y] == 0:  # 이동할 수 없는 칸은 무시
-                continue
-            if matrix_[X][Y] == 1:  # 이동 가능한 칸
-                matrix_[X][Y] = matrix_[x][y] + 1   # 방문한 칸에 1을 누적하여 더함
-                Q.append((X, Y))
-    return matrix_[N-1][M-1]    # 방문 횟수의 누적 합인 마지막 칸의 값을 반환
-
 N, M = map(int, input().split())
+miro = [list(map(int, input().rstrip())) for _ in range(N)]
 
-matrix_ = []
-for _ in range(N):
-    matrix_.append(list(map(int, input())))
 
-# matrix_ = [0 for _ in range(N)]
-# for i in range(N):
-#     row_ = int(input())
-#     matrix_[i] = list(map(int, str(row_)))
+def miro_bfs(x, y):
+    queue = deque()
+    queue.append((x, y))
+    
+    dx = [-1, 1, 0, 0]
+    dy = [0, 0, -1, 1]
+    
+    while queue:
+        x, y = queue.popleft()
+        
+        for i in range(4):
+            nx = x + dx[i]
+            ny = y + dy[i]
+            
+            if nx < 0 or nx >= N or ny < 0 or ny >= M or (nx == 0 and ny == 0):  # 공간을 벗어나는 경우, 이동할 수 없는 칸인 경우
+                continue
+                
+            if miro[nx][ny] == 1:
+                miro[nx][ny] = miro[x][y] + 1
+                queue.append((nx, ny))
+    
+    return miro[N - 1][M - 1]
 
-print(bfs(0, 0))
+print(miro_bfs(0, 0))
