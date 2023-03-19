@@ -1,53 +1,43 @@
-# 7569 : 토마토
+# 7569_02 : 토마토
 
 import sys
 input = sys.stdin.readline
 from collections import deque
 
+def bfs():
+    # q생성, v[]생성
+    q = deque()
+    v = [[[0]*M for _ in range(N)] for _ in range(H)]
+    
+    # q에 초기데이터(들) 삽입, 안익은 토마토 카운트
+    cnt = 0
+    for h in range(H):  # 전체 순회하며 처리
+        for i in range(N):
+            for j in range(M):
+                if arr[h][i][j] == 1:   # 익은 토마토
+                    q.append((h, i, j))
+                    v[h][i][j] = 1
+                elif arr[h][i][j] == 0: # 안익은 토마토
+                    cnt += 1
+                    
+    while q:
+        ch, ci, cj = q.popleft()
+        
+        # 6방향, 범위내, 미방문, arr[] == 0
+        for dh, di, dj in ((0, -1, 0), (0, 1, 0), (0, 0, -1), (0, 0, 1), (-1, 0, 0), (1, 0, 0)):
+            nh, ni, nj = ch + dh, ci + di, cj + dj
+            if 0 <= nh < H and 0 <= ni < N and 0 <= nj < M and v[nh][ni][nj] == 0 and arr[nh][ni][nj] == 0:
+                q.append((nh, ni, nj))
+                v[nh][ni][nj] = v[ch][ci][cj] + 1
+                cnt -= 1    # 안익은 토마토 1개 익음
+                
+    if cnt == 0:
+        return v[ch][ci][cj] - 1
+    else:
+        return -1
+
+
 M, N, H = map(int, input().split())
-
-# boxes = [[list(map(int, input().split())) for _ in range(N)] for _ in range(H)]
-
-boxes = []
-queue = deque([])
-
-for i in range(H):
-    tmp = []
-    
-    for j in range(N):
-        tmp.append(list(map(int, input().split())))
-        
-        for k in range(M):
-            if tmp[j][k] == 1:
-                queue.append([i, j, k])
-    
-    boxes.append(tmp)
-
-# print(boxes[1][1][2]) # 2층에 있는, 2번째 row, 3번째 column의 토마토 => 1
-
-dx = [-1, 1, 0, 0, 0, 0]
-dy = [0, 0, 1, -1, 0, 0]
-dz = [0, 0, 0, 0, 1, -1]
-
-while queue:
-    x, y, z = queue.popleft()
-    
-    for i in range(6):
-        nx = x + dx[i]
-        ny = y + dy[i]
-        nz = z + dz[i]
-        
-        if 0 <= nx < H and 0 <= ny < N and 0 <= nz < M and boxes[nx][ny][nz] == 0:
-            queue.append([nx, ny, nz])
-            boxes[nx][ny][nz] = boxes[x][y][z] + 1
-            
-day = 0
-
-for i in boxes:
-    for j in i:
-        for k in j:
-            if k == 0:
-                print(-1)
-                exit()
-        day = max(day, max(j))
-print(day - 1)
+arr = [[list(map(int, input().split())) for _ in range(N)] for _ in range(H)]
+ans = bfs()
+print(ans)
