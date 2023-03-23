@@ -8,11 +8,6 @@ def bfs(n):
     q = deque()
     q.append(n)
     
-    
-    # front = X + 1
-    # back = X - 1
-    # tele = 2 * X
-    
     while q:
         X = q.popleft()
         dX = [X - 1, X + 1, 2 * X]
