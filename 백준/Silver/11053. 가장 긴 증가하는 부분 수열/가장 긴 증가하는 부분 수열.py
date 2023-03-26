@@ -3,18 +3,20 @@
 import sys
 input = sys.stdin.readline
 
+# O(NlogN) 풀이
+
+from bisect import bisect_left
+
 N = int(input())
 seq = list(map(int, input().split()))
 
-dp = [0 for _ in range(N)]
+dp = [seq[0]]
 
-for i in range(N):
-    for j in range(i):
-        if seq[i] > seq[j] and dp[i] < dp[j]:
-            dp[i] = dp[j]
-    dp[i] += 1
+for i in range(1, N):
+    if dp[-1] > seq[i]:
+        idx = bisect_left(dp, seq[i])
+        dp[idx] = seq[i]
+    elif dp[-1] < seq[i]:
+        dp.append(seq[i])
 
-# print(seq)
-# print(dp)
-
-print(max(dp))
+print(len(dp))
