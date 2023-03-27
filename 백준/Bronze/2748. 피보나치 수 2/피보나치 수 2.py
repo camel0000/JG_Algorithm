@@ -1,20 +1,14 @@
-# 2748 : 피보나치 수 2
+# 2748_02 : 피보나치 수 2
 
 import sys
 input = sys.stdin.readline
 
 N = int(input())
 
-d = [0] * 91
+dp = [0 for _ in range(N + 1)]
+dp[0] = 0
+dp[1] = 1
 
-def fibo(N):
-    if N == 1 or N == 2:
-        return 1
-    
-    if d[N] != 0:
-        return d[N]
-    
-    d[N] = fibo(N - 1) + fibo(N - 2)
-    return d[N]
-
-print(fibo(N))
+for i in range(2, N + 1):
+    dp[i] = dp[i - 2] + dp[i - 1]
+print(dp[N])
