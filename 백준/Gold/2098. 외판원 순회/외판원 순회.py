@@ -1,3 +1,8 @@
+# 2098 : 외판원 순회
+
+import sys
+input = sys.stdin.readline
+
 def isIn(i, A):
     return (A & (1 << (i - 1))) != 0
 
