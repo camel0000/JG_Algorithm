@@ -1,25 +1,23 @@
-# 1106 : 호텔
+# 1106_02 : 호텔
 
 import sys
 input = sys.stdin.readline
 
 C, N = map(int, input().split())
-
-maxCost = sys.maxsize
-dp = [[maxCost] * (C + 1) for _ in range(N + 1)]
+dp = [[sys.maxsize] * (C + 1) for _ in range(N + 1)]
 
 for i in range(1, N + 1):
-    cost, num = map(int, input().split())
-    
-    for j in range(1, C + 1):
+    cost, person = map(int, input().split())
+        
+    for j in range(1, C + 1): 
         k = 0
         dp[i][j] = dp[i - 1][j]
         
         while 1:
-            if j - (k * num) > 0:
-                dp[i][j] = min(dp[i][j], dp[i - 1][j - k * num] + k * cost)
+            if j - person * k > 0:
+                dp[i][j] = min(dp[i][j], dp[i - 1][j - person * k] + cost * k)
             else:
-                dp[i][j] = min(dp[i][j], k * cost)
+                dp[i][j] = min(dp[i][j], cost * k)
                 break
             k += 1
 
