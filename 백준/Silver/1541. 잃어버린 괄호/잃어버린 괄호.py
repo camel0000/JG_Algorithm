@@ -1,34 +1,39 @@
-# 1541 : 잃어버린 괄호
+# 1541_02 : 잃어버린 괄호
 
 import sys
 input = sys.stdin.readline
 
-ex = list(input().rstrip())
+_list = list(input().rstrip())
 
-minus = 0
-stack = []
+mi = 0
+tmp = 0
+rs = 0
 
-
-for i in range(len(ex)):
-    if ex[i] == '0' and not stack:
-        continue
-    if ex[i] == '0' and stack[-1] == '+':
-        continue
-    if ex[i] == '0' and stack[-1] == '-':
-        continue
+for x in _list:
+    if x != '+' and x != '-':   # 숫자 합쳐서 정수형 화
+        tmp *= 10
+        tmp += int(x)
     
-    if ex[i] != '+' and ex[i] != '-':
-        stack.append(ex[i])
-    
-    if ex[i] == '+':
-        if minus == 1:
-            stack.append('-')
+    if x == '-':
+        if mi == 0:
+            rs += tmp
+            tmp = 0
+            mi = 1
         else:
-            stack.append('+')
+            rs -= tmp
+            tmp = 0
     
-    if ex[i] == '-':
-        minus = 1
-        stack.append('-')
+    if x == '+':
+        if mi == 0:
+            rs += tmp
+            tmp = 0        
+        else:
+            rs -= tmp
+            tmp = 0
 
-# print(''.join(map(str, stack)))
-print(eval(''.join(map(str, stack))))
+if mi == 0:
+    rs += tmp
+else:
+    rs -= tmp
+
+print(rs)
