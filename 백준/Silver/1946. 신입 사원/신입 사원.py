@@ -1,20 +1,16 @@
-import sys
+# 1946_03 : 신입 사원
 
+import sys
 input = sys.stdin.readline
 
 for _ in range(int(input())):
     N = int(input())
+    persons = sorted([tuple(map(int, input().split())) for _ in range(N)], key=lambda x : x[0])
 
-    persons = []
-    for _ in range(N):
-        a, b = map(int, input().split())
-        persons.append((a, b))
-        
-    persons.sort(key=lambda x : x[0])
-    
     rs = [persons[0]]
-    for i in range(1, N):
-        if persons[i][1] < rs[-1][1]:
-            rs.append(persons[i])
-            
+
+    for person in persons:
+        if person[1] < rs[-1][1]:
+            rs.append(person)
+
     print(len(rs))
