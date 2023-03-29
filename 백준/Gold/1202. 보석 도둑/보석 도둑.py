@@ -1,13 +1,12 @@
+# 1202 : 보석 도둑
+
 import sys
 input = sys.stdin.readline
 import heapq
 
 N, K = map(int, input().split())
-jews = [tuple(map(int, input().split())) for _ in range(N)]
+jews = sorted([tuple(map(int, input().split())) for _ in range(N)]) # 무게순, 가격순으로 정렬
 bags = sorted([int(input()) for _ in range(K)])
-
-# 무게순, 가격순으로 정렬
-jews = sorted(jews)
 
 # 가방 크기별로 고를 수 있는 보석을 heap에 저장
 heap = []
@@ -18,6 +17,6 @@ for i in range(K):
         heapq.heappush(heap, -jews[j][1])
         j += 1
     if heap:
-        rs -= heapq.heappop(heap)
+        rs += -heapq.heappop(heap)
 
 print(rs)
