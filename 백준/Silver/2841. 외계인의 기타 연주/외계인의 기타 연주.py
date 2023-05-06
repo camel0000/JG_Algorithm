@@ -9,13 +9,11 @@ mel = []
 for _ in range(N):
     s_num, p_num = map(int, input().split())
     mel.append([s_num, p_num])
-# print(mel)
 
 finger = 0
 stacks = [[], [], [], [], [], [], []]   # 스택 6개 + 1
 
 for i in range(N):
-    # print(stacks, finger)
     s_num, p_num = mel[i]
     breaker = 0
 
@@ -27,6 +25,7 @@ for i in range(N):
     if stacks[s_num][-1] < p_num:   # 현재 누를 프렛이 더 높으면
         stacks[s_num].append(p_num)
         finger += 1
+        
     elif stacks[s_num][-1] > p_num: # 현재 누를 프렛보다 더 낮으면
         for j in range(len(stacks[s_num])):
             if breaker == 0:
@@ -56,7 +55,8 @@ for i in range(N):
             continue
         stacks[s_num].append(p_num)
         finger += 1
+        
     else:                           # 현재 누를 프렛과 같으면
         continue
-# print('last', stacks)
+
 print(finger)
